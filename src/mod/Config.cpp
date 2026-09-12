@@ -1,9 +1,9 @@
 #include "mod/Config.h"
 
-namespace gradient_outline {
+namespace high_gyro {
 
 nlohmann::json makeDefaultConfigJson() { return pl::config::defaultJson(ModConfig{}); }
 
 nlohmann::json makeConfigSchemaJson() { return pl::config::schema(ModConfig{}); }
 
-} // namespace gradient_outline
+} // namespace high_gyro
