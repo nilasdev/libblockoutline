@@ -1,40 +1,9 @@
-cmake_minimum_required(VERSION 3.22)
-
-project(levilauncher_android_mod_template LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-set(MOD_ID "gradient_outline" CACHE STRING "LeviLauncher mod package directory name")
-set(MOD_NAME "Gradient Selection Outline" CACHE STRING "LeviLauncher mod display name")
-set(MOD_AUTHOR "nilas" CACHE STRING "LeviLauncher mod author")
+set(MOD_ID "high_gyro" CACHE STRING "LeviLauncher mod package directory name")
+set(MOD_NAME "High Gyro" CACHE STRING "LeviLauncher mod display name")
+set(MOD_AUTHOR "YourName" CACHE STRING "LeviLauncher mod author")
 set(MOD_VERSION "0.1.0" CACHE STRING "LeviLauncher mod version")
-set(MOD_LIBRARY_NAME "gradient_outline" CACHE STRING "Native library name without lib prefix or .so suffix")
-set(MOD_MINECRAFT_VERSIONS "[\"1.26.*\"]" CACHE STRING "Raw JSON array for manifest minecraft_versions")
-
-include(FetchContent)
-
-FetchContent_Declare(
-    preloader_android
-    GIT_REPOSITORY https://github.com/LiteLDev/preloader-android.git
-    GIT_TAG 0.2.2
-    SOURCE_SUBDIR cmake/preloader-sdk
-)
-FetchContent_Declare(
-    nlohmann_json
-    GIT_REPOSITORY https://github.com/nlohmann/json.git
-    GIT_TAG v3.11.3
-)
-FetchContent_Declare(
-    boost_pfr
-    GIT_REPOSITORY https://github.com/boostorg/pfr.git
-    GIT_TAG boost-1.88.0
-)
-FetchContent_Declare(
-    magic_enum
-    GIT_REPOSITORY https://github.com/Neargye/magic_enum.git
+set(MOD_LIBRARY_NAME "high_gyro" CACHE STRING "Native library name without lib prefix or .so suffix")
+set(MOD_MINECRAFT_VERSIONS "[\"1.26.*\"]" CACHE STRING "Raw JSON array for manifest minecraft_versions")    GIT_REPOSITORY https://github.com/Neargye/magic_enum.git
     GIT_TAG v0.9.7
 )
 FetchContent_Declare(
