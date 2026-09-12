@@ -6,13 +6,13 @@
 
 #include <pl/Mod.hpp>
 
-namespace gradient_outline {
+namespace high_gyro {
 
-class GradientOutlineMod {
+class HighGyroMod {
   public:
-    static GradientOutlineMod &instance();
+    static HighGyroMod &instance();
 
-    GradientOutlineMod();
+    HighGyroMod();
 
     [[nodiscard]] ll::mod::NativeMod &getSelf() const { return mSelf; }
 
@@ -27,4 +27,4 @@ class GradientOutlineMod {
     std::optional<pl::config::ConfigFile<ModConfig>> mConfigFile;
 };
 
-} // namespace gradient_outline
+} // namespace high_gyro
