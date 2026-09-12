@@ -3,38 +3,74 @@
 #include <filesystem>
 
 #include <pl/Mod.hpp>
+#include <pl/ModMenu.hpp>
 
-namespace gradient_outline {
+namespace high_gyro {
 
-GradientOutlineMod &GradientOutlineMod::instance() {
-    static GradientOutlineMod instance;
+HighGyroMod &HighGyroMod::instance() {
+    static HighGyroMod instance;
     return instance;
 }
 
-GradientOutlineMod::GradientOutlineMod() : mSelf(*ll::mod::NativeMod::current()) {}
+HighGyroMod::HighGyroMod() : mSelf(*ll::mod::NativeMod::current()) {}
 
-bool GradientOutlineMod::load() {
+bool HighGyroMod::load() {
     auto &self = getSelf();
-    self.getLogger().debug("Loading Gradient Outline mod...");
+    self.getLogger().info("Loading High Gyro...");
 
     std::error_code ec;
-
-    // Create data folder
     std::filesystem::create_directories(self.getDataDir(), ec);
-    if (ec) {
-        self.getLogger().error("Failed to create data directory: {}", ec.message());
-        return false;
-    }
-
-    // Create config folder
     std::filesystem::create_directories(self.getConfigDir(), ec);
-    if (ec) {
-        self.getLogger().error("Failed to create config directory: {}", ec.message());
-        return false;
+
+    mConfigFile.emplace();
+    if (!mConfigFile->load()) {
+        self.getLogger().warn("Failed to load config, using defaults");
+    }
+    mConfig = mConfigFile->value();
+
+    self.getLogger().info("High Gyro loaded. Sensitivity = {}", mConfig.sensitivity);
+    return true;
+}
+
+bool HighGyroMod::enable() {
+    auto &self = getSelf();
+    self.getLogger().info("Enabling High Gyro...");
+
+    if (!mConfig.enabled) {
+        self.getLogger().info("High Gyro is disabled in config");
+        return true;
     }
 
-    // Load config
-    mConfigFile.emplace();
+    // Register Mod Menu so you can change sensitivity in-game
+    pl::modmenu::ModuleBuilder("high_gyro.main", "High Gyro")
+        .modId(self.getId())
+        .description("Custom high sensitivity gyroscope (Deadzone 0, Smoothing 0)")
+        .defaultEnabled(mConfig.enabled)
+        .config("sensitivity", "Sensitivity", pl::modmenu::ConfigType::SliderFloat,
+                std::to_string(mConfig.sensitivity), "0.5", "10.0")
+        .registerModule();
+
+    // ============================================
+    // TODO: Real gyroscope reading + camera control will go here
+    // For now this is the clean structure ready for the gyro code
+    // ============================================
+
+    self.getLogger().info("High Gyro enabled with sensitivity {}", mConfig.sensitivity);
+    return true;
+}
+
+bool HighGyroMod::disable() {
+    getSelf().getLogger().info("Disabling High Gyro...");
+    return true;
+}
+
+bool HighGyroMod::unload() {
+    getSelf().getLogger().info("Unloading High Gyro...");
+    mConfigFile.reset();
+    return true;
+}
+
+} // namespace high_gyro    mConfigFile.emplace();
     if (!mConfigFile->load()) {
         self.getLogger().warn("Failed to load config, using defaults");
     }
