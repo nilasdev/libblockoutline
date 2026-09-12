@@ -2,4 +2,4 @@
 
 #include <pl/Mod.hpp>
 
-PL_REGISTER_MOD(gradient_outline::GradientOutlineMod, gradient_outline::GradientOutlineMod::instance());
+PL_REGISTER_MOD(high_gyro::HighGyroMod, high_gyro::HighGyroMod::instance());
